@@ -6,14 +6,18 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config)=>{
-  const token=getToken();
-  if(token){
+  const rawToken = localStorage.getItem("token");
+
+if (rawToken) {
+  
     if(isTokenExpired()){
       logout();
       return Promise.reject("Token expired");
     }
-    config.headers.Authorization=`Bearer ${token}`;
-  }
+    const token = rawToken.replace(/^"|"$/g, "");
+
+  config.headers.Authorization = `Bearer ${token}`;
+}
   return config;
 })
 export default instance;

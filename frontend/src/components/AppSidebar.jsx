@@ -6,7 +6,7 @@
  * Features:
  * - Redux-controlled visibility state
  * - Unfoldable/narrow mode for more screen space
- * - Brand logo with full and narrow variants
+ * - Brand logo (full and narrow variants for collapsed sidebar)
  * - Close button for mobile devices
  * - Footer with toggle button
  * - Dark color scheme
@@ -30,15 +30,26 @@ import {
   CSidebarHeader,
   CSidebarToggler,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
-
-import { logo } from 'src/assets/brand/logo'
-import { sygnet } from 'src/assets/brand/sygnet'
+import { hasPermission } from '../views/utils/auth'
 
 // sidebar nav config
 import navigation from '../_nav'
+import trfeLogo from '../assets/images/trf4elogo.png'
+
+const filterNavigationByPermission = (items) =>
+  items
+    .map((item) => {
+      if (item.items) {
+        const permittedItems = filterNavigationByPermission(item.items)
+
+        return permittedItems.length ? { ...item, items: permittedItems } : null
+      }
+
+      return hasPermission(item.permission) ? item : null
+    })
+    .filter(Boolean)
 
 /**
  * AppSidebar functional component
@@ -56,6 +67,7 @@ const AppSidebar = () => {
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
+  const permittedNavigation = filterNavigationByPermission(navigation)
 
   return (
     <CSidebar
@@ -70,8 +82,22 @@ const AppSidebar = () => {
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
-          <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} />
-          <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
+          <img
+            src={trfeLogo}
+            alt="Tech Rental"
+            className="sidebar-brand-full"
+            height={32}
+            style={{ maxWidth: 168, width: 'auto', objectFit: 'contain' }}
+          />
+          <img
+            src={trfeLogo}
+            alt=""
+            className="sidebar-brand-narrow"
+            height={28}
+            width={28}
+            style={{ objectFit: 'contain' }}
+            aria-hidden
+          />
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
@@ -79,7 +105,7 @@ const AppSidebar = () => {
           onClick={() => dispatch({ type: 'set', sidebarShow: false })}
         />
       </CSidebarHeader>
-      <AppSidebarNav items={navigation} />
+      <AppSidebarNav items={permittedNavigation} />
       <CSidebarFooter className="border-top d-none d-lg-flex">
         <CSidebarToggler
           onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}

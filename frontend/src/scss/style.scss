@@ -5,7 +5,83 @@
 @use "vendors/simplebar";
 
 body {
-  background-color: var(--cui-tertiary-bg);
+  --admin-dark-blue: #172554;
+  --admin-dark-blue-alt: #1e3a8a;
+  --admin-bright-blue: #0ea5e9;
+  --admin-bright-blue-hover: #0284c7;
+  --admin-neutral: #64748b;
+  --admin-border: #e2e8f0;
+  --admin-text: #0f172a;
+  --cui-primary: var(--admin-bright-blue);
+  --cui-primary-rgb: 14, 165, 233;
+  --cui-link-color: var(--admin-bright-blue);
+  --cui-link-hover-color: var(--admin-bright-blue-hover);
+  background-color: #f8fafc;
+  color: var(--admin-text);
+}
+
+.sidebar {
+  --cui-sidebar-bg: var(--admin-dark-blue);
+  --cui-sidebar-color: rgba(255, 255, 255, 0.74);
+  --cui-sidebar-brand-bg: #0f1b3d;
+  --cui-sidebar-nav-link-color: rgba(255, 255, 255, 0.78);
+  --cui-sidebar-nav-link-hover-bg: rgba(32, 160, 219, 0.16);
+  --cui-sidebar-nav-link-hover-color: #ffffff;
+  --cui-sidebar-nav-link-active-bg: var(--admin-bright-blue);
+  --cui-sidebar-nav-link-active-color: #ffffff;
+  --cui-sidebar-nav-group-bg: rgba(0, 0, 0, 0.14);
+  --cui-sidebar-nav-group-toggle-show-color: #ffffff;
+  border-right-color: rgba(14, 165, 233, 0.34) !important;
+}
+
+.sidebar-header,
+.sidebar-footer {
+  border-color: rgba(14, 165, 233, 0.26) !important;
+}
+
+.header {
+  --cui-header-bg: #ffffff;
+  border-bottom: 1px solid var(--admin-border);
+  box-shadow: 0 2px 14px rgba(15, 23, 42, 0.06);
+}
+
+.header .nav-link,
+.header .btn,
+.breadcrumb a {
+  color: var(--admin-dark-blue);
+}
+
+.header .nav-link:hover,
+.breadcrumb a:hover {
+  color: var(--admin-bright-blue);
+}
+
+.table,
+.MuiDataGrid-root {
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.MuiDataGrid-footerContainer {
+  background-color: #ffffff !important;
+  color: var(--admin-text) !important;
+}
+
+.MuiDataGrid-footerContainer .MuiTablePagination-root,
+.MuiDataGrid-footerContainer .MuiTablePagination-selectLabel,
+.MuiDataGrid-footerContainer .MuiTablePagination-displayedRows,
+.MuiDataGrid-footerContainer .MuiSvgIcon-root,
+.MuiDataGrid-footerContainer button {
+  color: var(--admin-text) !important;
+}
+
+.table thead th {
+  background-color: var(--admin-dark-blue);
+  border-bottom: 2px solid var(--admin-bright-blue);
+  color: #ffffff;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(14, 165, 233, 0.08);
 }
 
 .wrapper {

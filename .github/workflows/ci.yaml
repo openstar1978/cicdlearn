@@ -13,12 +13,12 @@ jobs:
       uses: actions/checkout@v3
 
     # =====================
-    # Backend (.NET)
+    # Backend (.NET Core 3.1)
     # =====================
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 3.1.x
 
     - name: Restore Backend
       run: |
@@ -28,15 +28,20 @@ jobs:
     - name: Build Backend
       run: |
         cd backend
-        dotnet build --configuration Release
+        dotnet build --configuration Release --no-restore
+
+    - name: Publish Backend
+      run: |
+        cd backend
+        dotnet publish -c Release -o publish
 
     # =====================
-    # Frontend (React)
+    # Frontend (React + Vite)
     # =====================
     - name: Setup Node
       uses: actions/setup-node@v3
       with:
-        node-version: 10.9.3
+        node-version: 18
 
     - name: Install Frontend
       run: |
@@ -47,3 +52,18 @@ jobs:
       run: |
         cd frontend
         npm run build
+
+    # =====================
+    # Upload Artifacts
+    # =====================
+    - name: Upload Backend Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: backend-build
+        path: backend/publish
+
+    - name: Upload Frontend Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: frontend-build
+        path: frontend/dist

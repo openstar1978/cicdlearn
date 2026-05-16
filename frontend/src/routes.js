@@ -69,6 +69,10 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
+const Users = React.lazy(() => import('./views/pages/users/UserList'))
+const Placeholder = React.lazy(() => import('./views/pages/placeholder/Placeholder'))
+const CustomerFormPage = React.lazy(() => import('./pages/customer/CustomerFormPage'))
+const CustomerPage = React.lazy(() => import('./pages/customer/CustomerPage'))
 /**
  * Array of route configuration objects
  *
@@ -88,7 +92,14 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
  */
 export const routes = [
   { path: '/', name: 'Dashboard', element: Dashboard },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/dashboard', name: 'Home', element: Dashboard },
+  { path: '/customers/form', name: 'School Form', element: CustomerFormPage },
+  { path: '/customers', name: 'Schools', element: CustomerPage },
+  { path: '/leases', name: 'Leases', element: Placeholder },
+  { path: '/payment-points', name: 'Payment Points', element: Placeholder },
+  { path: '/credit-controls', name: 'Credit Controls', element: Placeholder },
+  { path: '/reports', name: 'Reports', element: Placeholder },
+  { path: '/users', name: 'Users', element: Users },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

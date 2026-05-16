@@ -1,21 +1,43 @@
-import { createTheme } from "@mui/material/styles";
+import { alpha, createTheme } from '@mui/material/styles'
+
+const adminColors = {
+  darkBlue: '#172554',
+  darkBlueAlt: '#1e3a8a',
+  brightBlue: '#0ea5e9',
+  brightBlueHover: '#0284c7',
+  neutral: '#64748b',
+  border: '#e2e8f0',
+  text: '#0f172a',
+  pageBg: '#f8fafc',
+}
 
 const theme = createTheme({
   palette: {
-    mode: "light", // change to "dark" later if needed
+    mode: 'light',
     primary: {
-      main: "#000066",   // your brand color
+      main: adminColors.darkBlue,
+      contrastText: '#ffffff',
     },
     secondary: {
-      main: "#c4c4ff",
+      main: adminColors.brightBlue,
+      contrastText: '#ffffff',
+    },
+    text: {
+      primary: adminColors.text,
+      secondary: adminColors.neutral,
     },
     background: {
-      default: "#f4f6f9",
+      default: adminColors.pageBg,
+    },
+    DataGrid: {
+      bg: '#ffffff',
+      pinnedBg: '#eef5fb',
+      headerBg: adminColors.darkBlue,
     },
   },
 
   typography: {
-    fontFamily: "Roboto, Arial",
+    fontFamily: 'Roboto, Arial',
     h5: {
       fontWeight: 600,
     },
@@ -25,8 +47,24 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: "8px",
-          textTransform: "none",
+          borderRadius: '8px',
+          textTransform: 'none',
+          fontWeight: 600,
+        },
+        containedPrimary: {
+          backgroundColor: adminColors.brightBlue,
+          '&:hover': {
+            backgroundColor: adminColors.brightBlueHover,
+          },
+        },
+        outlinedPrimary: {
+          borderColor: adminColors.brightBlue,
+          color: adminColors.brightBlue,
+          '&:hover': {
+            borderColor: adminColors.darkBlue,
+            backgroundColor: alpha(adminColors.brightBlue, 0.08),
+            color: adminColors.darkBlue,
+          },
         },
       },
     },
@@ -35,7 +73,75 @@ const theme = createTheme({
         variant: "outlined",
       },
     },
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          borderColor: adminColors.border,
+          backgroundColor: '#ffffff',
+          borderRadius: '8px',
+          overflow: 'hidden',
+        },
+        columnHeaders: {
+          backgroundColor: adminColors.darkBlue,
+          color: '#ffffff',
+          borderBottom: `2px solid ${adminColors.brightBlue}`,
+        },
+        columnHeader: {
+          '&:focus, &:focus-within': {
+            outline: 'none',
+          },
+        },
+        columnHeaderTitle: {
+          fontWeight: 700,
+        },
+        cell: {
+          borderBottomColor: adminColors.border,
+          '&:focus, &:focus-within': {
+            outline: 'none',
+          },
+        },
+        row: {
+          '&:hover': {
+            backgroundColor: alpha(adminColors.brightBlue, 0.08),
+          },
+          '&.Mui-selected': {
+            backgroundColor: alpha(adminColors.brightBlue, 0.16),
+            '&:hover': {
+              backgroundColor: alpha(adminColors.brightBlue, 0.22),
+            },
+          },
+        },
+        footerContainer: {
+          borderTopColor: adminColors.border,
+          backgroundColor: '#ffffff',
+          color: adminColors.text,
+        },
+        toolbarContainer: {
+          color: adminColors.text,
+        },
+        selectedRowCount: {
+          color: adminColors.text,
+        },
+        withBorderColor: {
+          borderColor: adminColors.border,
+        },
+      },
+    },
+    MuiTablePagination: {
+      styleOverrides: {
+        root: {
+          color: adminColors.text,
+        },
+        selectIcon: {
+          color: adminColors.text,
+        },
+        actions: {
+          color: adminColors.text,
+        },
+      },
+    },
   },
-});
+})
 
-export default theme;
+export { adminColors }
+export default theme
