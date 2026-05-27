@@ -38,12 +38,15 @@ namespace backend
             services.AddInfrastructure(Configuration);
 
             var key = Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]);
+            var allowedOrigins = Configuration
+    .GetSection("AllowedOrigins")
+    .Get<string[]>();
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowFrontend",
                     policy =>
                     {
-                        policy.WithOrigins("http://localhost:3000")
+                        policy.WithOrigins(allowedOrigins)
                               .AllowAnyHeader()
                               .AllowAnyMethod();
                     });
@@ -87,7 +90,7 @@ namespace backend
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "backend v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseExceptionHandlingMiddleware();
             app.UseRouting();
             app.UseCors("AllowFrontend");

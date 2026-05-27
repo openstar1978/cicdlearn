@@ -20,6 +20,7 @@ import { alpha, ThemeProvider, createTheme } from '@mui/material/styles'
 import UserDialog from './UserDialog'
 import UserPermissionDialog from './UserPermissionDialog'
 import AppSnackbar from '../../../components/AppSnackbar'
+import DataTablePagination from '../../../components/DataTablePagination'
 import { DataGrid } from '@mui/x-data-grid'
 import { useDataGrid } from '../../../hooks/useDataGrid'
 import { hasPermission } from '../../utils/auth'
@@ -35,9 +36,9 @@ const getTheme = (mode) =>
         main: adminColors.brightBlue,
       },
       DataGrid: {
-        bg: mode === 'light' ? '#ffffff' : '#1f2937',
-        pinnedBg: mode === 'light' ? '#f1f5f9' : '#1e293b',
-        headerBg: adminColors.darkBlue,
+        bg: '#ffffff',
+        pinnedBg: '#f9fafb',
+        headerBg: adminColors.headerBg,
       },
     },
     components: {
@@ -49,9 +50,9 @@ const getTheme = (mode) =>
             overflow: 'hidden',
           },
           columnHeaders: {
-            backgroundColor: adminColors.darkBlue,
-            color: '#ffffff',
-            borderBottom: `2px solid ${adminColors.brightBlue}`,
+            backgroundColor: adminColors.headerBg,
+            color: adminColors.text,
+            borderBottom: `2px solid ${adminColors.border}`,
           },
           columnHeaderTitle: {
             fontWeight: 700,
@@ -86,7 +87,7 @@ const getTheme = (mode) =>
     },
   })
 function UserList() {
-  const [mode, setMode] = React.useState('dark')
+  const [mode, setMode] = React.useState('light')
   const theme = React.useMemo(() => getTheme(mode), [mode])
   const [users, setUsers] = useState([])
   const [open, setOpen] = useState(false)
@@ -138,7 +139,7 @@ function UserList() {
               aria-label="Assign permissions"
               size="small"
               variant="contained"
-              color="secondary"
+              color="primary"
               startIcon={<AdminPanelSettingsIcon />}
               onClick={() => handlePermissions(params.row)}
               sx={{
@@ -231,6 +232,18 @@ function UserList() {
           onSortModelChange={(model) => setSortModel(model)}
           pageSizeOptions={[5, 10, 20]}
           autoHeight
+          hideFooter
+        />
+        <DataTablePagination
+          page={page}
+          pageSize={pageSize}
+          rowCount={rowCount}
+          pageSizeOptions={[5, 10, 20]}
+          onPageChange={setPage}
+          onPageSizeChange={(nextPageSize) => {
+            setPage(0)
+            setPageSize(nextPageSize)
+          }}
         />
       </ThemeProvider>
       {/* <Paper>

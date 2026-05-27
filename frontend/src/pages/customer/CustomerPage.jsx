@@ -5,7 +5,7 @@
  * Wire to your API when ready (see filter pipeline in useMemo).
  */
 
-import React, { useMemo, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Box,
@@ -16,19 +16,15 @@ import {
   Button,
   ToggleButton,
   ToggleButtonGroup,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
 } from '@mui/material'
 import { alpha, ThemeProvider, createTheme } from '@mui/material/styles'
-import RefreshIcon from '@mui/icons-material/Refresh'
 import { DataGrid } from '@mui/x-data-grid'
 
 import { buildCustomerFormSearch } from './customerFormPaths'
-import { MOCK_CUSTOMERS, MOCK_LEASE_ROWS } from './customerMockData'
 import { adminColors } from '../../theme'
+import api from '../../views/api/axios'
+import DataTablePagination from '../../components/DataTablePagination'
 
-const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
 const getTheme = (mode) =>
   createTheme({
     palette: {
@@ -40,9 +36,9 @@ const getTheme = (mode) =>
         main: adminColors.brightBlue,
       },
       DataGrid: {
-        bg: mode === 'light' ? '#ffffff' : '#1f2937',
-        pinnedBg: mode === 'light' ? '#f1f5f9' : '#1e293b',
-        headerBg: adminColors.darkBlue,
+        bg: '#ffffff',
+        pinnedBg: '#f9fafb',
+        headerBg: adminColors.headerBg,
       },
     },
     components: {
@@ -54,14 +50,15 @@ const getTheme = (mode) =>
             overflow: 'hidden',
           },
           columnHeaders: {
-            backgroundColor: adminColors.darkBlue,
-            color: '#ffffff',
-            borderBottom: `2px solid ${adminColors.brightBlue}`,
+            backgroundColor: adminColors.headerBg,
+            color: adminColors.text,
+            borderBottom: `2px solid ${adminColors.border}`,
           },
           columnHeaderTitle: {
             fontWeight: 700,
           },
           row: {
+            color: adminColors.text,
             '&:hover': {
               backgroundColor: alpha(adminColors.brightBlue, 0.08),
             },
@@ -90,34 +87,18 @@ const getTheme = (mode) =>
       },
     },
   })
-function matchesLetter(name, letterFilter) {
-  if (!name) return false
-  if (letterFilter === 'ALL') return true
-  const c = name.trim().charAt(0).toUpperCase()
-  return c === letterFilter
-}
-
-function includesField(hay, needle) {
-  if (!needle) return true
-  return String(hay ?? '')
-    .toLowerCase()
-    .includes(String(needle).toLowerCase())
-}
-
 export default function CustomerPage() {
   const navigate = useNavigate()
-  const [mode, setMode] = React.useState('dark')
-  const [color, setColor] = useState('rgb(255, 255, 255)')
+  const [mode] = React.useState('light')
   const theme = React.useMemo(() => getTheme(mode), [mode])
-  const [letterFilter, setLetterFilter] = useState('ALL')
   const [sortMode, setSortMode] = useState('custref')
-  const [accountRef1, setAccountRef1] = useState('')
-  const [customerName, setCustomerName] = useState('')
-  const [town, setTown] = useState('')
-  const [county, setCounty] = useState('')
-  const [postcode, setPostcode] = useState('')
-  const [listItem, setListItem] = useState('name')
   const [displayMode, setDisplayMode] = useState('First50')
+  const [searchText, setSearchText] = useState('')
+  const [rows, setRows] = useState([])
+  const [rowCount, setRowCount] = useState(0)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 25 })
 
   const customerColumns = [
     {
@@ -215,35 +196,50 @@ export default function CustomerPage() {
     },
   ]
 
-  const filteredCustomers = useMemo(() => {
-    let rows = MOCK_CUSTOMERS.filter((r) => matchesLetter(r.name, letterFilter))
-    if (accountRef1) rows = rows.filter((r) => includesField(r.accountRef, accountRef1))
-    if (customerName) rows = rows.filter((r) => includesField(r.name, customerName))
-    if (town) rows = rows.filter((r) => includesField(r.town, town))
-    if (county) rows = rows.filter((r) => includesField(r.county, county))
-    if (postcode) rows = rows.filter((r) => includesField(r.postcode, postcode))
-    if (listItem === 'overdue') rows = rows.filter((r) => Number(r.balance) > 0)
-    rows = [...rows].sort((a, b) => String(a.name).localeCompare(String(b.name)))
-    if (displayMode === 'First50') return rows.slice(0, 50)
-    return rows
-  }, [letterFilter, accountRef1, customerName, town, county, postcode, listItem, displayMode])
+  const loadRows = useCallback(async () => {
+    setLoading(true)
+    setError('')
 
-  const filteredLeases = useMemo(() => {
-    let rows = [...MOCK_LEASE_ROWS]
-    if (letterFilter !== 'ALL') rows = rows.filter((r) => matchesLetter(r.name, letterFilter))
-    if (accountRef1) rows = rows.filter((r) => includesField(r.accountRef, accountRef1))
-    if (customerName) rows = rows.filter((r) => includesField(r.name, customerName))
-    if (postcode) rows = rows.filter((r) => includesField(r.postcode, postcode))
-    if (listItem === 'overdue') rows = rows.filter((r) => Number(r.balance) > 0)
-    if (displayMode === 'First50') return rows.slice(0, 50)
-    return rows
-  }, [letterFilter, accountRef1, customerName, postcode, listItem, displayMode])
+    try {
+      const endpoint = sortMode === 'leaseid' ? '/customers/by-lease' : '/customers/by-school'
+      const response = await api.get(endpoint, {
+        params: {
+          search: searchText,
+          page: paginationModel.page + 1,
+          pageSize: paginationModel.pageSize,
+        },
+      })
+      setRows(response.data?.data ?? [])
+      setRowCount(response.data?.total ?? 0)
+    } catch (err) {
+      if (err?.response?.status === 403) {
+        setError(
+          sortMode === 'leaseid'
+            ? 'You do not have Leases.View permission.'
+            : 'You do not have Schools.View permission.',
+        )
+      } else {
+        setError('Unable to load customer data.')
+      }
+      setRows([])
+      setRowCount(0)
+    } finally {
+      setLoading(false)
+    }
+  }, [paginationModel.page, paginationModel.pageSize, searchText, sortMode])
 
-  const rows = sortMode === 'leaseid' ? filteredLeases : filteredCustomers
+  useEffect(() => {
+    const timeout = window.setTimeout(loadRows, 300)
+    return () => window.clearTimeout(timeout)
+  }, [loadRows])
 
-  const onLetterChange = useCallback((_e, value) => {
-    if (value != null) setLetterFilter(value)
-  }, [])
+  useEffect(() => {
+    const pageCount = Math.max(1, Math.ceil(rowCount / paginationModel.pageSize))
+
+    if (paginationModel.page >= pageCount) {
+      setPaginationModel((current) => ({ ...current, page: pageCount - 1 }))
+    }
+  }, [paginationModel.page, paginationModel.pageSize, rowCount])
 
   const handleRowClick = useCallback(
     (params) => {
@@ -256,14 +252,13 @@ export default function CustomerPage() {
   return (
     <Box sx={{ width: '100%', pb: 2 }}>
       <ThemeProvider theme={theme}>
-        <Paper variant="outlined" sx={{ overflow: 'hidden' }}>
-          <Typography
-            variant="h5"
-            sx={{ mb: 2, fontWeight: 600, textAlign: 'center', color: theme.palette.primary.main }}
-          >
-            Schools
-          </Typography>
-          <Box
+        <Typography
+          variant="h5"
+          sx={{ mb: 2, fontWeight: 600, textAlign: 'center', color: theme.palette.primary.main }}
+        >
+          Schools
+        </Typography>
+        {/* <Box
             sx={(theme) => ({
               px: 2,
               py: 1.5,
@@ -316,64 +311,80 @@ export default function CustomerPage() {
                 </Button>
               </ToggleButtonGroup>
             </Stack>
-          </Box>
+          </Box> */}
 
-          <Box sx={{ bgcolor: 'background.paper', p: 2, borderBottom: 1, borderColor: 'divider' }}>
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ width: '100%', mb: 1 }}
-            >
-              {/* Left Side */}
-              <Stack direction="row" alignItems="center" gap={1}>
-                <Typography
-                  variant="body2"
-                  fontWeight={600}
-                  sx={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                  }}
-                >
-                  View : &nbsp;
-                </Typography>
+        <Box sx={{ bgcolor: 'white', color: 'black', p: 2 }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ width: '100%', mb: 1 }}
+          >
+            {/* Left Side */}
+            <Stack direction="row" alignItems="center" gap={1}>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                sx={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                }}
+              >
+                View : &nbsp;
+              </Typography>
 
-                <ToggleButtonGroup
-                  exclusive
-                  size="small"
-                  color="primary"
-                  value={sortMode}
-                  onChange={(_e, v) => v && setSortMode(v)}
-                >
-                  <ToggleButton value="custref">By school</ToggleButton>
-                  <ToggleButton value="leaseid">By lease</ToggleButton>
-                </ToggleButtonGroup>
-              </Stack>
-
-              {/* Right Side */}
-              <Box sx={{ ml: 'auto' }}>
-                <RadioGroup
-                  row
-                  value={listItem}
-                  onChange={(e) => setListItem(e.target.value)}
-                  aria-label="List filter"
-                >
-                  <FormControlLabel
-                    value="name"
-                    control={<Radio size="small" color="primary" />}
-                    label={<Typography variant="body2">All</Typography>}
-                  />
-
-                  <FormControlLabel
-                    value="overdue"
-                    control={<Radio size="small" color="primary" />}
-                    label={<Typography variant="body2">Overdue</Typography>}
-                  />
-                </RadioGroup>
-              </Box>
+              <ToggleButtonGroup
+                exclusive
+                size="small"
+                color="primary"
+                value={sortMode}
+                onChange={(_e, v) => {
+                  if (v) {
+                    setSortMode(v)
+                    setPaginationModel((current) => ({ ...current, page: 0 }))
+                  }
+                }}
+              >
+                <ToggleButton value="custref">By school</ToggleButton>
+                <ToggleButton value="leaseid">By lease</ToggleButton>
+              </ToggleButtonGroup>
             </Stack>
 
-            {/* <Stack direction="row" flexWrap="wrap" gap={1} useFlexGap>
+            <Stack direction="row" alignItems="center" gap={1}>
+              <TextField
+                label={sortMode === 'leaseid' ? 'Search lease' : 'Search school'}
+                size="small"
+                value={searchText}
+                onChange={(e) => {
+                  setSearchText(e.target.value)
+                  setPaginationModel((current) => ({ ...current, page: 0 }))
+                }}
+                sx={{ width: 280 }}
+              />
+              <Button size="small" variant="outlined" onClick={loadRows}>
+                Search
+              </Button>
+              <Button
+                size="small"
+                variant="text"
+                onClick={() => {
+                  setSearchText('')
+                  setDisplayMode('First50')
+                  setPaginationModel((current) => ({ ...current, page: 0 }))
+                }}
+              >
+                Reset
+              </Button>
+            </Stack>
+          </Stack>
+
+          {error && (
+            <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+              {error}
+            </Typography>
+          )}
+
+          {/* <Stack direction="row" flexWrap="wrap" gap={1} useFlexGap>
             <TextField
               label="Account ref"
               size="small"
@@ -415,7 +426,7 @@ export default function CustomerPage() {
             />
           </Stack> */}
 
-            {/* <Stack
+          {/* <Stack
             direction={{ xs: 'column', sm: 'row' }}
             alignItems={{ sm: 'center' }}
             justifyContent="space-between"
@@ -468,16 +479,33 @@ export default function CustomerPage() {
               </Button>
             </Stack>
           </Stack> */}
-          </Box>
-
+        </Box>
+        <Paper sx={{ overflow: 'hidden' }}>
           <Box sx={{ width: '100%' }}>
             <DataGrid
               rows={rows}
               columns={sortMode === 'leaseid' ? leaseColumns : customerColumns}
+              loading={loading}
+              paginationMode="server"
+              rowCount={rowCount}
+              paginationModel={paginationModel}
+              onPaginationModelChange={setPaginationModel}
               pageSizeOptions={[10, 25, 50, 100]}
-              initialState={{ pagination: { paginationModel: { pageSize: 25 } } }}
               onRowClick={handleRowClick}
               disableRowSelectionOnClick
+              hideFooter
+            />
+            <DataTablePagination
+              page={paginationModel.page}
+              pageSize={paginationModel.pageSize}
+              rowCount={rowCount}
+              pageSizeOptions={[10, 25, 50, 100]}
+              onPageChange={(nextPage) =>
+                setPaginationModel((current) => ({ ...current, page: nextPage }))
+              }
+              onPageSizeChange={(nextPageSize) =>
+                setPaginationModel({ page: 0, pageSize: nextPageSize })
+              }
             />
           </Box>
         </Paper>

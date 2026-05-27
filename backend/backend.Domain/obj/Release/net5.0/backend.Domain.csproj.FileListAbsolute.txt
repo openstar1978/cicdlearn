@@ -1,0 +1,12 @@
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\bin\Release\net5.0\backend.Domain.deps.json
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\bin\Release\net5.0\backend.Domain.dll
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\bin\Release\net5.0\ref\backend.Domain.dll
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\bin\Release\net5.0\backend.Domain.pdb
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\obj\Release\net5.0\backend.Domain.csproj.AssemblyReference.cache
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\obj\Release\net5.0\backend.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\obj\Release\net5.0\backend.Domain.AssemblyInfoInputs.cache
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\obj\Release\net5.0\backend.Domain.AssemblyInfo.cs
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\obj\Release\net5.0\backend.Domain.csproj.CoreCompileInputs.cache
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\obj\Release\net5.0\backend.Domain.dll
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\obj\Release\net5.0\ref\backend.Domain.dll
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Domain\obj\Release\net5.0\backend.Domain.pdb

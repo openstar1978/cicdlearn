@@ -27,7 +27,6 @@ D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\b
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\bin\Debug\net5.0\backend.Infrastructure.runtimeconfig.json
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\bin\Debug\net5.0\backend.Infrastructure.runtimeconfig.dev.json
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\bin\Debug\net5.0\backend.Infrastructure.dll
-D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\bin\Debug\net5.0\ref\backend.Infrastructure.dll
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\bin\Debug\net5.0\backend.Infrastructure.pdb
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\bin\Debug\net5.0\backend.Application.dll
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\bin\Debug\net5.0\backend.Domain.dll
@@ -42,4 +41,5 @@ D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\o
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\obj\Debug\net5.0\ref\backend.Infrastructure.dll
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\obj\Debug\net5.0\backend.Infrastructure.pdb
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\obj\Debug\net5.0\backend.Infrastructure.genruntimeconfig.cache
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\bin\Debug\net5.0\ref\backend.Infrastructure.dll
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Infrastructure\obj\Debug\net5.0\backend.Infrastructure.csproj.CopyComplete

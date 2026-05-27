@@ -18,7 +18,6 @@ D:\bhadreshkaka\openstar\website\nigelwork\code\backend\.build-check\backend.App
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\.build-check\backend.Application.pdb
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Debug\net5.0\backend.Application.deps.json
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Debug\net5.0\backend.Application.dll
-D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Debug\net5.0\ref\backend.Application.dll
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Debug\net5.0\backend.Application.pdb
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Debug\net5.0\backend.Domain.dll
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Debug\net5.0\backend.Domain.pdb
@@ -30,4 +29,5 @@ D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Debug\net5.0\backend.Application.dll
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Debug\net5.0\ref\backend.Application.dll
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Debug\net5.0\backend.Application.pdb
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Debug\net5.0\ref\backend.Application.dll
 D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Debug\net5.0\backend.Application.csproj.CopyComplete

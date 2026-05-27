@@ -5,38 +5,41 @@
 @use "vendors/simplebar";
 
 body {
-  --admin-dark-blue: #172554;
-  --admin-dark-blue-alt: #1e3a8a;
-  --admin-bright-blue: #0ea5e9;
-  --admin-bright-blue-hover: #0284c7;
-  --admin-neutral: #64748b;
-  --admin-border: #e2e8f0;
-  --admin-text: #0f172a;
-  --cui-primary: var(--admin-bright-blue);
-  --cui-primary-rgb: 14, 165, 233;
-  --cui-link-color: var(--admin-bright-blue);
+  --admin-dark-blue: #0f2a44;
+  --admin-dark-blue-alt: #143d63;
+  --admin-bright-blue: #1d9bd7;
+  --admin-bright-blue-hover: #0b75b7;
+  --admin-sidebar-grey: #4b5563;
+  --admin-sidebar-grey-dark: #374151;
+  --admin-neutral: #6b7280;
+  --admin-border: #d1d5db;
+  --admin-header-bg: #f3f4f6;
+  --admin-text: #111827;
+  --cui-primary: var(--admin-dark-blue);
+  --cui-primary-rgb: 15, 42, 68;
+  --cui-link-color: var(--admin-dark-blue);
   --cui-link-hover-color: var(--admin-bright-blue-hover);
-  background-color: #f8fafc;
+  background-color: #f5f7fa;
   color: var(--admin-text);
 }
 
 .sidebar {
-  --cui-sidebar-bg: var(--admin-dark-blue);
+  --cui-sidebar-bg: var(--admin-sidebar-grey);
   --cui-sidebar-color: rgba(255, 255, 255, 0.74);
-  --cui-sidebar-brand-bg: #0f1b3d;
+  --cui-sidebar-brand-bg: var(--admin-sidebar-grey-dark);
   --cui-sidebar-nav-link-color: rgba(255, 255, 255, 0.78);
-  --cui-sidebar-nav-link-hover-bg: rgba(32, 160, 219, 0.16);
+  --cui-sidebar-nav-link-hover-bg: rgba(15, 42, 68, 0.22);
   --cui-sidebar-nav-link-hover-color: #ffffff;
-  --cui-sidebar-nav-link-active-bg: var(--admin-bright-blue);
+  --cui-sidebar-nav-link-active-bg: var(--admin-dark-blue);
   --cui-sidebar-nav-link-active-color: #ffffff;
   --cui-sidebar-nav-group-bg: rgba(0, 0, 0, 0.14);
   --cui-sidebar-nav-group-toggle-show-color: #ffffff;
-  border-right-color: rgba(14, 165, 233, 0.34) !important;
+  border-right-color: rgba(17, 24, 39, 0.18) !important;
 }
 
 .sidebar-header,
 .sidebar-footer {
-  border-color: rgba(14, 165, 233, 0.26) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
 }
 
 .header {
@@ -53,7 +56,7 @@ body {
 
 .header .nav-link:hover,
 .breadcrumb a:hover {
-  color: var(--admin-bright-blue);
+  color: var(--admin-bright-blue-hover);
 }
 
 .table,
@@ -64,6 +67,10 @@ body {
 .MuiDataGrid-footerContainer {
   background-color: #ffffff !important;
   color: var(--admin-text) !important;
+  border-top: 1px solid var(--admin-border) !important;
+  justify-content: space-between !important;
+  min-height: 52px !important;
+  padding: 0 12px !important;
 }
 
 .MuiDataGrid-footerContainer .MuiTablePagination-root,
@@ -74,14 +81,65 @@ body {
   color: var(--admin-text) !important;
 }
 
+.MuiDataGrid-footerContainer .MuiTablePagination-root {
+  margin-left: auto !important;
+  overflow: visible !important;
+}
+
+.MuiDataGrid-footerContainer .MuiTablePagination-toolbar {
+  min-height: 44px !important;
+  padding-right: 0 !important;
+}
+
+.MuiDataGrid-footerContainer .MuiTablePagination-actions {
+  display: inline-flex !important;
+  gap: 6px !important;
+  margin-left: 12px !important;
+}
+
+.MuiDataGrid-footerContainer .MuiTablePagination-actions button {
+  width: 32px !important;
+  height: 32px !important;
+  border: 1px solid var(--admin-border) !important;
+  border-radius: 4px !important;
+  background-color: #ffffff !important;
+}
+
+.MuiDataGrid-footerContainer .MuiTablePagination-actions button:hover {
+  border-color: var(--admin-dark-blue) !important;
+  background-color: var(--admin-dark-blue) !important;
+}
+
+.MuiDataGrid-footerContainer .MuiTablePagination-actions button:hover .MuiSvgIcon-root {
+  color: #ffffff !important;
+}
+
+.datatable-pagination {
+  min-height: 54px;
+}
+
+.datatable-pagination .MuiTypography-root {
+  line-height: 32px;
+}
+
+.MuiDataGrid-columnHeaders,
+.MuiDataGrid-columnHeader {
+  background-color: var(--admin-header-bg) !important;
+  color: var(--admin-text) !important;
+}
+
+.MuiDataGrid-columnHeaders {
+  border-bottom: 1px solid var(--admin-border) !important;
+}
+
 .table thead th {
-  background-color: var(--admin-dark-blue);
-  border-bottom: 2px solid var(--admin-bright-blue);
-  color: #ffffff;
+  background-color: var(--admin-header-bg);
+  border-bottom: 1px solid var(--admin-border);
+  color: var(--admin-text);
 }
 
 .table tbody tr:hover {
-  background-color: rgba(14, 165, 233, 0.08);
+  background-color: rgba(29, 155, 215, 0.08);
 }
 
 .wrapper {

@@ -1,4 +1,5 @@
 using backend.Application.Auth;
+using backend.Application.Customers;
 using backend.Application.Permissions;
 using backend.Application.Roles;
 using backend.Application.Users;
@@ -14,6 +15,7 @@ namespace backend.Application
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<ICustomerSearchService, CustomerSearchService>();
             return services;
         }
     }

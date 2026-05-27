@@ -1,14 +1,17 @@
 import { alpha, createTheme } from '@mui/material/styles'
 
 const adminColors = {
-  darkBlue: '#172554',
-  darkBlueAlt: '#1e3a8a',
-  brightBlue: '#0ea5e9',
-  brightBlueHover: '#0284c7',
-  neutral: '#64748b',
-  border: '#e2e8f0',
-  text: '#0f172a',
-  pageBg: '#f8fafc',
+  darkBlue: '#0f2a44',
+  darkBlueAlt: '#143d63',
+  brightBlue: '#1d9bd7',
+  brightBlueHover: '#0b75b7',
+  sidebarGrey: '#4b5563',
+  sidebarGreyDark: '#374151',
+  neutral: '#6b7280',
+  border: '#d1d5db',
+  headerBg: '#f3f4f6',
+  text: '#111827',
+  pageBg: '#f5f7fa',
 }
 
 const theme = createTheme({
@@ -31,8 +34,8 @@ const theme = createTheme({
     },
     DataGrid: {
       bg: '#ffffff',
-      pinnedBg: '#eef5fb',
-      headerBg: adminColors.darkBlue,
+      pinnedBg: '#f9fafb',
+      headerBg: adminColors.headerBg,
     },
   },
 
@@ -52,9 +55,9 @@ const theme = createTheme({
           fontWeight: 600,
         },
         containedPrimary: {
-          backgroundColor: adminColors.brightBlue,
+          backgroundColor: adminColors.darkBlue,
           '&:hover': {
-            backgroundColor: adminColors.brightBlueHover,
+            backgroundColor: adminColors.darkBlueAlt,
           },
         },
         outlinedPrimary: {
@@ -82,9 +85,9 @@ const theme = createTheme({
           overflow: 'hidden',
         },
         columnHeaders: {
-          backgroundColor: adminColors.darkBlue,
-          color: '#ffffff',
-          borderBottom: `2px solid ${adminColors.brightBlue}`,
+          backgroundColor: adminColors.headerBg,
+          color: adminColors.text,
+          borderBottom: `2px solid ${adminColors.border}`,
         },
         columnHeader: {
           '&:focus, &:focus-within': {

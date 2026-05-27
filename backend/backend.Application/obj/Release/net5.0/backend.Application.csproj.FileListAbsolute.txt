@@ -1,0 +1,15 @@
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Release\net5.0\backend.Application.deps.json
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Release\net5.0\backend.Application.dll
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Release\net5.0\ref\backend.Application.dll
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Release\net5.0\backend.Application.pdb
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Release\net5.0\backend.Domain.dll
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\bin\Release\net5.0\backend.Domain.pdb
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Release\net5.0\backend.Application.csproj.AssemblyReference.cache
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Release\net5.0\backend.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Release\net5.0\backend.Application.AssemblyInfoInputs.cache
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Release\net5.0\backend.Application.AssemblyInfo.cs
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Release\net5.0\backend.Application.csproj.CoreCompileInputs.cache
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Release\net5.0\backend.Application.csproj.CopyComplete
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Release\net5.0\backend.Application.dll
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Release\net5.0\ref\backend.Application.dll
+D:\bhadreshkaka\openstar\website\nigelwork\code\backend\backend.Application\obj\Release\net5.0\backend.Application.pdb
